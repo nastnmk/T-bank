@@ -1,32 +1,32 @@
-package homeworkHangman;
+package Hangman;
 
 import java.util.ArrayList;
 
-public class Results implements Result{
+public class DefaultGamePrinter implements GamePrinter {
     @Override
-    public void Win(String answer) {
+    public void win(String answer) {
         System.out.println("Вы выиграли! Загаданное слово: "+ answer );
     }
 
     @Override
-    public void Loser(String answer) {
+    public void loser(String answer) {
         System.out.println("Вы проиграли! Загаданное слово: "+ answer );
     }
 
     @Override
-    public void Success(String hiddenAnswer, Input input, ArrayList<Character> guessedLetters) {
+    public void success(String hiddenAnswer, char letter, ArrayList<Character> guessedLetters) {
         System.out.println("Попадание!");
         System.out.println("Слово "+hiddenAnswer );
         System.out.println();
-        guessedLetters.add(input.getLetter());
+        guessedLetters.add(letter);
     }
 
     @Override
-    public void Lose(String hiddenAnswer, int userAttempts, Input input, ArrayList<Character> not_guessedLetters) {
+    public void lose(String hiddenAnswer, int userAttempts, char letter, ArrayList<Character> notGuessedLetters) {
         System.out.println("Не та буква(");
         System.out.println("Слово "+hiddenAnswer );
         System.out.println("Осталось попыток: "+ userAttempts);
-        not_guessedLetters.add(input.getLetter());
+        notGuessedLetters.add(letter);
         System.out.println();
     }
 }
