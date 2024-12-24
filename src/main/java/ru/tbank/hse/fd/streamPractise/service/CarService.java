@@ -114,7 +114,10 @@ public class CarService {
      * Необходимо вернуть отсортированный по полю age список Car
      */
     public List<Car> getSortedCarsByAge(List<Car> cars) {
-        return null;
+        return cars
+                .stream()
+                .sorted(Comparator.comparing(Car::getAge))
+                .toList();
     }
 
     /**
@@ -122,7 +125,11 @@ public class CarService {
      * Необходимо посчитать средний возраст всех машин
      */
     public double getAvgCarsAge(List<Car> cars) {
-        return 0;
+        return cars
+                .stream()
+                .mapToInt(Car::getAge)
+                .average()
+                .orElseThrow();
     }
 
     /**
@@ -130,7 +137,10 @@ public class CarService {
      * Проверить, что все машины с Condition - "Broken" старше 10 лет
      */
     public Boolean checkBrokenCarsAge(List<Car> cars) {
-        return null;
+        return cars
+                .stream()
+                .filter(car -> car.getCondition().equals("Broken"))
+                .allMatch(car -> car.getAge()>10);
     }
 
     /**
@@ -138,7 +148,10 @@ public class CarService {
      * Проверить, что хотя бы у одной машины с Condition - "USED" был владелец по имени Adam
      */
     public Boolean checkCarOwnerName(List<Car> cars) {
-        return null;
+        return cars
+                .stream()
+                .filter(car -> car.getCondition().equals("USED"))
+                .anyMatch(car -> car.getOwners().contains("Adam"));
     }
 
     /**
@@ -146,6 +159,11 @@ public class CarService {
      * Необходимо вернуть любого Owner старше 36 лет
      */
     public Owner getAnyOwner(List<Car> cars) {
-        return null;
+        return cars
+                .stream()
+                .flatMap(car -> car.getOwners().stream())
+                .filter(owner -> owner.getAge()>36)
+                .findAny()
+                .orElse(null);
     }
 }
